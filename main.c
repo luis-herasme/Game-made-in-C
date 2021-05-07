@@ -25,8 +25,8 @@ int main()
     struct Scene scene = createScene();
 
     // Constantes del juego.
-    const int WINDOW_WIDTH = 1600;
-    const int WINDOW_HEIGHT = 900;
+    const int WINDOW_WIDTH = 800;
+    const int WINDOW_HEIGHT = 600;
     const char *GAME_NAME = "ZOMBI";
 
     // Setup.
@@ -51,7 +51,7 @@ int main()
         updateObject,
         collisionPlayer);
 
-    player.velocity = (Vector2){0, 5};
+    player.velocity = (Vector2){0, 2};
 
     player.sounds[0] = sound1;
     player.sounds[1] = sound2;
@@ -73,7 +73,7 @@ int main()
     Texture2D treeSprite = getImage("./assets/sprites/palmtree1.png");
     Texture2D zombieSprite = getImage("./assets/sprites/Zombie2.png");
 
-    for (int i = 0; i < 200; i++)
+    for (int i = 0; i < 100; i++)
     {
         struct GameObject zombie;
         zombie.position = (Vector2){rand() % 2400, rand() % 2400};

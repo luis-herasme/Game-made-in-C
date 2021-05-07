@@ -1,3 +1,5 @@
+#include <math.h>
+#define PI 3.141592654
 
 int zombies_alive = 1;
 
@@ -55,9 +57,14 @@ struct Scene updateScene(struct Scene scene)
 {
     
         if (sceneGameObjects[1].tag > 0) {
+            // int r = 50;
+            // int anadirX = r * cos(sceneGameObjects[scene.target].rotation);
+            // int anadirY = r * sin(sceneGameObjects[scene.target].rotation);
+            
+            
             struct GameObject ball = createGameObject(
-                (Vector2) {sceneGameObjects[scene.target].position.x, sceneGameObjects[1].position.y},
-                (Vector2) {10, 10},
+                (Vector2) {sceneGameObjects[scene.target].position.x + sceneGameObjects[scene.target].size.x / 2 + 25 * cos(sceneGameObjects[scene.target].rotation * PI / 180 ) , sceneGameObjects[1].position.y + 25 * sin(sceneGameObjects[scene.target].rotation * PI / 180 ) + sceneGameObjects[scene.target].size.y / 2 },
+                (Vector2) {5, 5},
                 "./assets/sprites/ball.png",
                 move,
                 ballCol
@@ -113,8 +120,8 @@ struct Scene updateScene(struct Scene scene)
 
 void startScene (struct Scene this) {
     
-    this.camera.target = (Vector2) {sceneGameObjects[this.target].position.x + 35, sceneGameObjects[this.target].position.y + 35};
-    this.camera.offset = (Vector2) {0, 0};
+    //this.camera.target = (Vector2) {sceneGameObjects[this.target].position.x + 35, sceneGameObjects[this.target].position.y + 35};
+    //this.camera.offset = (Vector2) {0, 0};
     this.camera.rotation = 0.0f;
     this.camera.zoom = 0.75f;
     
@@ -124,7 +131,7 @@ void startScene (struct Scene this) {
     // Game loop.
     while (!WindowShouldClose()) {
         
-        this.camera.target = (Vector2) {sceneGameObjects[this.target].position.x + 35, sceneGameObjects[this.target].position.y + 35};
+        this.camera.target = (Vector2) {sceneGameObjects[this.target].position.x - 400, sceneGameObjects[this.target].position.y - 300};
 
         Vector2 desplazamiento = (Vector2) {0, 0};
         desplazamiento.x += sceneGameObjects[this.target].position.x;
@@ -148,13 +155,13 @@ void startScene (struct Scene this) {
         DrawText(result, 50, 50, 25, WHITE);
         
         if (sceneGameObjects[this.target].vida < 0) {
-            DrawRectangle(0, 0, 1200, 700, GRAY);
-            DrawText("GAME OVER", 600 - MeasureText("GAME OVER", 100) / 2, 300, 100, WHITE);
-            DrawText("Cierra la ventana para volver a jugar", 600 - MeasureText("Cierra la ventana para volver a jugar", 25) / 2, 450, 25, WHITE);
+            //DrawRectangle(0, 0, 800, 300, GRAY);
+            DrawText("GAME OVER", 400 - MeasureText("GAME OVER", 100) / 2, 300, 100, WHITE);
+            DrawText("Cierra la ventana para volver a jugar", 400 - MeasureText("Cierra la ventana para volver a jugar", 25) / 2, 450, 25, WHITE);
         }
         if (!zombies_alive) {
-            DrawRectangle(0, 0, 1200, 700, GRAY);
-            DrawText("Ganaste!", 600 - MeasureText("Ganaste!", 100) / 2, 300, 100, WHITE);   
+           // DrawRectangle(0, 0, 800, 300, GRAY);
+            DrawText("Ganaste!", 400 - MeasureText("Ganaste!", 100) / 2, 300, 100, WHITE);   
         }
    
         EndDrawing();
@@ -162,8 +169,8 @@ void startScene (struct Scene this) {
         desplazamiento.x -= sceneGameObjects[this.target].position.x;
         desplazamiento.y -= sceneGameObjects[this.target].position.y;
         
-        this.camera.offset.x += desplazamiento.x;
-        this.camera.offset.y += desplazamiento.y;
+        // this.camera.offset.x += desplazamiento.x;
+        // this.camera.offset.y += desplazamiento.y;
     
         UpdateMusicStream(music);
     }
